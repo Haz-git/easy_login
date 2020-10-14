@@ -1,3 +1,11 @@
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+//configure dotENV before importing Express Application
+dotenv.config({
+    path: './config.env',
+});
+
 const app = require('./app');
 
 app.listen(3000, () => {
