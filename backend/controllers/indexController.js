@@ -1,6 +1,12 @@
 const User = require('../models/userModel');
 const handleAsync = require('../utils/handleAsync');
 const throwAppError = require('../utils/throwAppError');
+const jwt = require('jsonwebtoken');
+
+//Creating function to sign JWT:
+const signToken = id => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+}
 
 exports.getTest = (req, res) => {
     res.status(200).json({
@@ -19,8 +25,12 @@ exports.signup = handleAsync(async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm,
     });
 
+    //Creating Token:
+    const token = signToken(newUser._id);
+
     res.status(200).json({
         status: 'Success',
+        token,
         message: 'This User has been added to the DB',
         data: {
             user: newUser
