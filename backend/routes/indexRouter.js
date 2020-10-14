@@ -9,7 +9,7 @@ router.route('/').get(indexController.getTest);
 
 router
     .route('/signup')
-    .post(indexController.signUp);
+    .post(indexController.signup);
 
 router
     .route('/login')
