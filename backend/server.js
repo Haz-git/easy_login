@@ -8,6 +8,21 @@ dotenv.config({
 
 const app = require('./app');
 
+//Configure mongoDB environmental variables
+const DB = process.env.DATABASE.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+);
+
+//Use mongoose to connect to mongoDB:
+mongoose
+    .connect(DB, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+    })
+    .then(() => console.log(`Database Connection to Mongo Atlas Established.`))
+
 app.listen(3000, () => {
     console.log('Server is currently listening on port 3000');
 });
