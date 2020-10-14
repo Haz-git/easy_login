@@ -3,6 +3,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 //Components:
 import Header from './Header';
+import SignUp from './SignUp';
+import Login from './Login';
 
 const App = () => {
     return (
