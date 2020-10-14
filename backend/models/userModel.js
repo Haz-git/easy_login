@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const validator = require('validator')
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 //Creating new Schema via mongoose:
 
@@ -29,6 +30,16 @@ const userSchema = mongoose.Schema({
             message: 'Passwords do not match'
         }
     }
+})
+
+//Pre-save hook for password encryption:
+
+userSchema.pre('save', async function(next){
+    if (!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);
+    this.passwordConfirm = undefined;
+    next();
 })
 
 //Creating Model from Schema:
