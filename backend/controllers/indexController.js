@@ -32,6 +32,7 @@ exports.signup = handleAsync(async (req, res, next) => {
         status: 'Success',
         token,
         message: 'This User has been added to the DB',
+        completed: true,
         data: {
             user: newUser
         }
@@ -58,6 +59,7 @@ exports.login = handleAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'Login is Successfull',
+        completed: true,
         token,
     });
 });
