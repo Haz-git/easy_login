@@ -24,5 +24,5 @@ mongoose
     .then(() => console.log(`Database Connection to Mongo Atlas Established.`))
 
 app.listen(4000, () => {
-    console.log('Server is currently listening on port 3000');
+    console.log('Server is currently listening on port 4000');
 });
