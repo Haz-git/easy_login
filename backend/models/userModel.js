@@ -42,6 +42,11 @@ userSchema.pre('save', async function(next){
     next();
 })
 
+//Creating instance method for comparing hashed passwords:
+userSchema.methods.compareHashedPasswords = async function (candidatePassword, userPassword) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+}
+
 //Creating Model from Schema:
 const User = mongoose.model('User', userSchema);
 

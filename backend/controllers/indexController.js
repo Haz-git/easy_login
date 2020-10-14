@@ -38,9 +38,26 @@ exports.signup = handleAsync(async (req, res, next) => {
     });
 });
 
-exports.login = (req, res) => {
+exports.login = handleAsync(async (req, res, next) => {
+    //Extracting email and password from request
+    const { email, password } = req.body;
+    //Making sure email and password exists in request:
+    if (!email || !password) {
+        return next(new throwAppError('Please provide an email or password', 400));
+    }
+    //Checking if email and password exists in database:
+    const user = await User.findOne({ email }).select('+password');
+
+    //Comparing the two hashed passwords.
+    if (!user || !await user.compareHashedPasswords(password, user.password)) {
+        return next(new throwAppError('Incorrect email or password', 401));
+    }
+
+    //Send token to client if everything is correct:
+    const token = signToken(user._id);
+
     res.status(200).json({
-        status: 'Success',
-        results: 'Hey! You are currently in the LOGIN location which I have not created yet. Sorry!'
+        status: 'Login is Successfull',
+        token,
     });
-}
+});
