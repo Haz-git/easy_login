@@ -1,4 +1,4 @@
-import USER_SIGN_UP from './userSignTypes';
+import { USER_SIGN_UP } from './userSignTypes';
 
 const initialState = {};
 
