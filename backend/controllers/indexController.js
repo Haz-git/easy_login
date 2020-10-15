@@ -49,6 +49,9 @@ exports.login = handleAsync(async (req, res, next) => {
     //Checking if email and password exists in database:
     const user = await User.findOne({ email }).select('+password');
 
+    //Grabbing user's name:
+    const userName = await User.findOne({ email }).select(`+name`);
+
     //Comparing the two hashed passwords.
     if (!user || !await user.compareHashedPasswords(password, user.password)) {
         return next(new throwAppError('Incorrect email or password', 401));
@@ -59,6 +62,7 @@ exports.login = handleAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'Login is Successfull',
+        userDetails: userName,
         completed: true,
         token,
     });
