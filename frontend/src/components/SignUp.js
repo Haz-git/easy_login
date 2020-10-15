@@ -5,14 +5,12 @@ import { connect } from 'react-redux';
 import userSignUp from '../redux/userSignUp/userSignActions';
 
 
-const SignUp = ({ handleSubmit }) => {
+const SignUp = ({ handleSubmit, userSignUp }) => {
 
     const handleOnSubmit = formValues => {
         console.log(formValues)
         userSignUp(formValues);
     }
-
-
 
     return (
         <div>
