@@ -1,5 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+
+//Allowing cors policy to enable connections
+app.use(cors())
 
 const indexRouter = require('./routes/indexRouter')
 
