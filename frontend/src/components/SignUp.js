@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import userSignUp from '../redux/userSignUp/userSignActions';
 
 
 const SignUp = ({ handleSubmit }) => {
 
     const handleOnSubmit = formValues => {
-        console.log(formValues);
+        console.log(formValues)
+        userSignUp(formValues);
     }
 
 
@@ -42,6 +45,8 @@ const SignUp = ({ handleSubmit }) => {
     )
 }
 
+const connectedSignUp = connect(null, { userSignUp })(SignUp)
+
 export default reduxForm({
     form: 'signUpForm'
-})(SignUp)
+})(connectedSignUp)

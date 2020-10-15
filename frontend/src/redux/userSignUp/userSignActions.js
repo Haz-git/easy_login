@@ -1,5 +1,5 @@
 import api from '../../apis';
-import USER_SIGN_UP from './userSignTypes';
+import { USER_SIGN_UP }from './userSignTypes';
 
 export const userSignUp = formValues => async dispatch => {
     //Sending information to DB:
