@@ -12,6 +12,7 @@ const SignUp = ({ handleSubmit, userSignUp }) => {
         userSignUp(formValues);
     }
 
+
     return (
         <div>
             <div>
@@ -42,6 +43,7 @@ const SignUp = ({ handleSubmit, userSignUp }) => {
         </div>
     )
 }
+
 
 const connectedSignUp = connect(null, { userSignUp })(SignUp)
 
