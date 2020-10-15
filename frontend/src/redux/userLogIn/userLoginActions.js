@@ -5,14 +5,17 @@ import history from '../../history';
 export const userLogin = formValues => async dispatch => {
     //Sending information to DB:
     const response = await api.post('/login', {...formValues});
-    console.log(response);
 
     dispatch({
         type: USER_LOGIN,
         payload: response.data,
     });
 
-    // history.push('/signupnotice');
+    console.log(response);
+
+    if (response.data.completed === true) {
+        history.push('/loginnotice');
+    }
 }
 
 export default userLogin;

@@ -6,6 +6,7 @@ import Header from './Header';
 import SignUp from './SignUp';
 import Login from './Login';
 import SignUpNotice from './SignUpNotice';
+import LoginNotice from './LoginNotice';
 
 //History Object:
 import history from '../history';
@@ -18,6 +19,7 @@ const App = () => {
                 <Route exact path='/signup' component={SignUp} />
                 <Route exact path='/signupnotice' component={SignUpNotice} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/loginnotice' component={LoginNotice} />
             </Router>
         </>
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const SignUpNotice = ({ userName, userEmail, userStatus }) => {
     return (
@@ -15,9 +15,9 @@ const SignUpNotice = ({ userName, userEmail, userStatus }) => {
 
 const mapStateToProps = state => {
     return {
-        userName: state.signin.user.data.user.name,
-        userEmail: state.signin.user.data.user.email,
-        userStatus: state.signin.user.status
+        userName: state.signin.userSignUp.data.user.name,
+        userEmail: state.signin.userSignUp.data.user.email,
+        userStatus: state.signin.userSignUp.status
     }
 }
 
