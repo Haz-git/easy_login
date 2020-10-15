@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+
+import userLogin from '../redux/userLogIn/userLoginActions';
 
 
-const Login = ({handleSubmit}) => {
+const Login = ({ handleSubmit, userLogin }) => {
 
     const handleOnSubmit = formValues => {
         console.log(formValues);
+        userLogin(formValues);
     }
 
     return (
@@ -19,11 +23,11 @@ const Login = ({handleSubmit}) => {
                 <div>
                     <div>
                         <label>Please Enter Your Email Address:</label>
-                        <Field name='loginEmail' component='input' />
+                        <Field name='email' component='input' />
                     </div>
                     <div>
                         <label>Please Enter Your Password</label>
-                        <Field name='loginPassword' component='input' />
+                        <Field name='password' component='input' />
                     </div>
                 </div>
                 <button type='submit'>Submit</button>
@@ -33,6 +37,8 @@ const Login = ({handleSubmit}) => {
     )
 }
 
+const connectedLoginForm = connect(null, { userLogin })(Login);
+
 export default reduxForm({
     form: 'loginForm'
-})(Login);
+})(connectedLoginForm);
