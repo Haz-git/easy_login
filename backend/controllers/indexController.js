@@ -76,4 +76,12 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
     if(!userEmail) {
         return next(new throwAppError('There is no registered User with that email address', 404));
     }
+
+    //If there is a user, generate a random reset token and send.
+    const resetToken = User.createPasswordResetToken();
+
+    await User.save({
+        validateBeforeSave: false
+    });
+
 });
