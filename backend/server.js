@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const cors = require('cors');
 
 //configure dotENV before importing Express Application
 dotenv.config({
@@ -8,9 +7,6 @@ dotenv.config({
 });
 
 const app = require('./app');
-
-//Allowing cors policy to enable connections
-app.use(cors())
 
 //Configure mongoDB environmental variables
 const DB = process.env.DATABASE.replace(

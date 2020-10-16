@@ -67,3 +67,13 @@ exports.login = handleAsync(async (req, res, next) => {
         token,
     });
 });
+
+exports.forgotPassword = handleAsync(async (req, res, next) => {
+    //Getting user based on POSTed email. Remember, this is our only identifier 
+    const userEmail = await User.findOne({ email: req.body.email });
+    //Check if there is really a user:
+    
+    if(!userEmail) {
+        return next(new throwAppError('There is no registered User with that email address', 404));
+    }
+});
