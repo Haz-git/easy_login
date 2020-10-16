@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-const ForgotAccount = ({ isOnline }) => {
+const ForgotAccount = ({ isOnline, handleSubmit }) => {
+
+    useEffect(() => {
+        console.log(isOnline)
+    },[]);
+
+    const handleOnSubmit = values => {
+        console.log(values);
+        //Temporary handler--need action creator for submission function? Or directly send request to server?
+    }
 
     const renderText = () => {
         if (isOnline === true) {
@@ -14,12 +23,16 @@ const ForgotAccount = ({ isOnline }) => {
                     <Link to='/'>I want to change my password!</Link>
                 </div>
             )
-        } else if (isOnline === false || isOnline === undefined) {
+        } else {
             return (
                 <div>
                     <h1>Welcome! I'm sorry that you've forgot your password.</h1>
                     <h2>We can help with that! Just provide your email address below:</h2>
-                    <Field name='email' component='input' />
+                    <form onSubmit={handleSubmit(handleOnSubmit)}>
+                        <label>Email:</label>
+                        <Field name='email' component='input' />
+                        <button type='submit'>Reset My Password</button>
+                    </form>
                 </div>
             )
         }
@@ -36,12 +49,10 @@ const ForgotAccount = ({ isOnline }) => {
 }
 
 const mapStateToProps = state => {
-    if (state.signup) {
+    if (state.signin.userLogin) {
         return {
             isOnline: state.signin.userLogin.completed
         }
-    } else {
-        return undefined;
     }
 }
 

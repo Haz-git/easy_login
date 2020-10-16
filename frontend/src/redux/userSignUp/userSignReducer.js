@@ -9,6 +9,6 @@ export default (state = initialState, action) => {
     } else if (action.type === USER_LOGIN) {
         return {...state, userLogin: action.payload}
     } else {
-        return state;
+        return {...state};
     }
 }
