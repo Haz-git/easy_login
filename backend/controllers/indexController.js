@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const handleAsync = require('../utils/handleAsync');
 const throwAppError = require('../utils/throwAppError');
 const jwt = require('jsonwebtoken');
+const sendEmail = require('../utils/email');
 
 //Creating function to sign JWT:
 const signToken = id => {
@@ -89,4 +90,25 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
 
     const message = `Hello! This is from my test app. To reset your password, please submit a PATCH request with your new password and passwordConfirm to ${resetURL}.`
 
+    //Wrap try/catch block in order to catch mailing errors:
+    try{
+
+        await sendEmail({
+            email: User.email,
+            subject: 'Your password reset token (valid for 10 mins)',
+            message,
+        });
+
+        res.status(200).json({
+            status: 'Message sent successfully',
+            message: 'Token was sent to email address'
+        })
+
+    } catch(err) {
+        User.passwordResetToken = undefined;
+        User.passwordResetExpires = undefined;
+        await User.save({ validateBeforeSave: false });
+
+        return next(new throwAppError('Something went wrong sending this email.', 500));
+    }
 });
