@@ -112,3 +112,37 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
         return next(new throwAppError('Something went wrong sending this email.', 500));
     }
 });
+
+exports.resetPassword = handleAsync(async (req, res, next) => {
+    //Hash token that was sent to email via URL.
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+    
+    //Search for USER via hash token:
+    const user = await User.findOne({ 
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { $gte: Date.now() } //If the date is greater than now, that means that that the token is still in effect, remember that we set the token to ~10 mins greater than now.
+    });
+
+    //If the token is not expired AND the password reset token's hashes are correct, then we'll change the user fields:
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save();
+
+    //Send JWT to user:
+
+    const token = signToken(user._id);
+
+    res.status(200).json({
+        status: 'Success',
+        message: 'Your password has been changed!',
+        token
+    })
+
+    
+})
