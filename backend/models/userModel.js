@@ -30,7 +30,9 @@ const userSchema = mongoose.Schema({
             },
             message: 'Passwords do not match'
         }
-    }
+    },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
 })
 
 //Generating a instance method for token creation:
