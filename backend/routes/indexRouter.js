@@ -8,7 +8,11 @@ const router = express.Router();
 router.route('/').get(indexController.getTest);
 
 router
-    .route('/forgotpassword')
+    .route('/resetpassword')
+    .patch(indexController.resetPassword);
+
+router
+    .route('/forgotpassword/:token')
     .post(indexController.forgotPassword);
 
 router
