@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
+import api from '../apis';
+import history from '../history';
 
 const ForgotAccount = ({ isOnline, handleSubmit }) => {
 
@@ -9,9 +11,11 @@ const ForgotAccount = ({ isOnline, handleSubmit }) => {
         console.log(isOnline)
     },[]);
 
-    const handleOnSubmit = values => {
+    const handleOnSubmit = async values => {
         console.log(values);
         //Temporary handler--need action creator for submission function? Or directly send request to server?
+        await api.post('/forgotpassword', {...values});
+        history.push('/');
     }
 
     const renderText = () => {
