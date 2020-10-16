@@ -79,9 +79,9 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
     }
 
     //If there is a user, generate a random reset token and send.
-    const resetToken = User.createPasswordResetToken();
+    const resetToken = userEmail.createPasswordResetToken();
 
-    await User.save({
+    await userEmail.save({
         validateBeforeSave: false
     });
 
@@ -94,7 +94,7 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
     try{
 
         await sendEmail({
-            email: User.email,
+            email: userEmail.email,
             subject: 'Your password reset token (valid for 10 mins)',
             message,
         });
@@ -105,9 +105,9 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
         })
 
     } catch(err) {
-        User.passwordResetToken = undefined;
-        User.passwordResetExpires = undefined;
-        await User.save({ validateBeforeSave: false });
+        userEmail.passwordResetToken = undefined;
+        userEmail.passwordResetExpires = undefined;
+        await userEmail.save({ validateBeforeSave: false });
 
         return next(new throwAppError('Something went wrong sending this email.', 500));
     }
