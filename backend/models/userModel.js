@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 //Creating new Schema via mongoose:
 
@@ -31,6 +32,23 @@ const userSchema = mongoose.Schema({
         }
     }
 })
+
+//Generating a instance method for token creation:
+userSchema.methods.createPasswordResetToken = function() {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    //The reset token is saved in its hashed form to the database, similar to the password:
+
+    this.passwordResetToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+    return resetToken;
+}
+
 
 //Pre-save hook for password encryption:
 
