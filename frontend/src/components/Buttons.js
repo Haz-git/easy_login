@@ -10,6 +10,12 @@ const Buttons = () => {
             <div>
                 <Link to='/login'>Login!</Link>
             </div>
+            <div>
+                <h2>Test your password resets here:</h2>
+            </div>
+            <div>
+                <Link to='/forgotaccount'>I forgot my password</Link>
+            </div>
         </>
     )
 }
