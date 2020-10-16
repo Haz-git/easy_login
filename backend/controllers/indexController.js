@@ -3,6 +3,7 @@ const handleAsync = require('../utils/handleAsync');
 const throwAppError = require('../utils/throwAppError');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/email');
+const crypto = require('crypto');
 
 //Creating function to sign JWT:
 const signToken = id => {
