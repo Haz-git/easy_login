@@ -84,4 +84,9 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
         validateBeforeSave: false
     });
 
+    //Send to User:
+    const resetURL = `${req.protocol}://${req.get('host')}/api/resetPassword/${resetToken}`;
+
+    const message = `Hello! This is from my test app. To reset your password, please submit a PATCH request with your new password and passwordConfirm to ${resetURL}.`
+
 });
